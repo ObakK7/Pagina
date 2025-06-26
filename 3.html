@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mi Portfolio de Marketing</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* ----------  Custom properties  --------- */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+    :root {
+      --bg: #0d0d0d;
+      --fg: #e0e0e0;
+      --accent: #9b59b6;
+      --card-bg: #1a1a1a;
+      --border: #333;
+      --shadow: rgba(0, 0, 0, 0.8);
+      --muted-icon: #555;
+    }
+
+    /* ----------  Reset / base  --------- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg);
+      color: var(--fg);
+      line-height: 1.6;
+    }
+
+    /* ----------  Layout  --------- */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background-color: #111;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 999;
+    }
+
+    .logo {
+      font-weight: 800;
+      color: var(--accent);
+      font-size: 1.8rem;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--fg);
+      font-weight: 600;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: var(--accent);
+    }
+
+    .hero {
+      text-align: center;
+      padding: 8rem 2rem 6rem;
+      background: linear-gradient(145deg, #111, #1a1a1a);
+      box-shadow: 0 10px 40px var(--shadow);
+    }
+
+    .hero h2 {
+      font-size: 3.5rem;
+      margin-bottom: 1rem;
+      color: var(--accent);
+    }
+
+    .hero p {
+      font-size: 1.25rem;
+      max-width: 700px;
+      margin: 0 auto;
+      opacity: 0.85;
+    }
+
+    .section {
+      padding: 4rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      border-bottom: 2px solid var(--accent);
+      display: inline-block;
+      padding-bottom: 0.5rem;
+    }
+
+    .grid {
+      display: grid;
+      gap: 2rem;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      margin-top: 2rem;
+    }
+
+    .card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 1rem;
+      border-radius: 1rem;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 20px var(--shadow);
+    }
+
+    /* ----------  GALLERY OVERRIDES  --------- */
+    .design-card {
+      padding: 0;
+      border-radius: 1rem;
+      background: none;
+      border: none;
+      overflow: hidden;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .design-card:hover {
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: 0 5px 25px var(--shadow);
+    }
+
+    .design-card img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.35s ease;
+    }
+
+    .design-card:hover img {
+      transform: scale(1.06);
+    }
+
+    /* ----------  Skill bars & icons  --------- */
+    .language-bar {
+      background: #333;
+      border-radius: 10px;
+      overflow: hidden;
+      height: 1rem;
+      margin-top: 0.5rem;
+    }
+
+    .language-bar span {
+      display: block;
+      height: 100%;
+      background: var(--accent);
+    }
+
+    .skills-icons img {
+      height: 36px;
+      opacity: 0.6;
+      filter: grayscale(100%) brightness(0.7);
+      transition: opacity 0.3s;
+    }
+
+    .skills-icons img:hover {
+      opacity: 1;
+      filter: none;
+    }
+
+    /* ----------  Services  --------- */
+    .services-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .service-card {
+      background-color: #121212;
+      border-radius: 1.5rem;
+      padding: 2rem;
+      text-align: center;
+      border: 1px solid #222;
+      box-shadow: 0 5px 30px rgba(0,0,0,0.3);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .service-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+    }
+
+    .service-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: var(--accent);
+    }
+
+    .service-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+    }
+
+    .service-desc {
+      font-size: 0.95rem;
+      opacity: 0.8;
+    }
+
+    /* ----------  Contact (nuevos estilos) --------- */
+    .contact-section {
+      background: linear-gradient(135deg, #1b1b1b 0%, #111111 100%);
+      padding: 5rem 2rem;
+      color: var(--fg);
+    }
+
+    .contact-section h2 {
+      text-align: center;
+      font-size: 2.5rem;
+      margin-bottom: 3rem;
+      color: var(--accent);
+    }
+
+    .contact-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      max-width: 900px;
+      margin: 0 auto;
+      align-items: start;
+    }
+
+    .contact-form {
+      background-color: var(--card-bg);
+      padding: 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 10px 30px var(--shadow);
+    }
+
+    .form-group {
+      position: relative;
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 1rem 1rem 1rem 0.5rem;
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid var(--border);
+      color: var(--fg);
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: var(--accent);
+    }
+
+    .form-group label {
+      position: absolute;
+      top: 1rem;
+      left: 0.5rem;
+      color: var(--muted-icon);
+      font-size: 0.9rem;
+      pointer-events: none;
+      transition: transform 0.2s, font-size 0.2s;
+    }
+
+    .form-group input:focus + label,
+    .form-group input:not(:placeholder-shown) + label,
+    .form-group textarea:focus + label,
+    .form-group textarea:not(:placeholder-shown) + label {
+      transform: translateY(-1.5rem);
+      font-size: 0.8rem;
+      color: var(--accent);
+    }
+
+    .btn-submit {
+      display: inline-block;
+      padding: 0.75rem 2rem;
+      background: var(--accent);
+      color: #fff;
+      font-weight: 600;
+      border: none;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+      transition: transform 0.3s, background 0.3s;
+    }
+
+    .btn-submit:hover {
+      transform: translateY(-3px);
+      background: #8e44ad;
+    }
+
+    .contact-info {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      padding: 2rem;
+    }
+
+    .info-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .info-item .icon {
+      font-size: 1.5rem;
+      color: var(--accent);
+    }
+
+    .info-item p {
+      font-size: 1rem;
+      opacity: 0.9;
+    }
+
+    @media (max-width: 768px) {
+      .contact-container {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+
+  <!-- Google Subscribe Buttons API (para mostrar tus canales) -->
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+</head>
+<body>
+  <!-- ----------  NAV  ---------- -->
+  <header class="navbar">
+    <h1 class="logo">Omar Bakkali</h1>
+    <nav>
+      <ul>
+        <li><a href="#about">Sobre Mí</a></li>
+        <li><a href="#projects">Proyectos</a></li>
+        <li><a href="#youtube">Canales</a></li>
+        <li><a href="#skills">Habilidades</a></li>
+        <li><a href="#services">Servicios</a></li>
+        <li><a href="#contact">Contacto</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- ----------  HERO  ---------- -->
+  <section class="hero">
+    <h2>Creatividad que Conecta</h2>
+    <p>Marketing visual, estrategia digital y contenido creativo que cautiva y convierte. Descubre mi universo profesional.</p>
+  </section>
+
+  <!-- ----------  ABOUT  ---------- -->
+  <section id="about" class="section">
+    <h2>Sobre Mí</h2>
+    <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 2rem;">
+      <div style="flex: 1 1 250px; min-width: 200px; max-width: 300px; text-align: center;">
+        <img src="profile.jpg" alt="Foto de perfil" style="width: 100%; max-width: 240px; height: auto; border-radius: 50%; border: 3px solid var(--accent); box-shadow: 0 0 20px rgba(0,0,0,0.3);">
+      </div>
+      <div style="flex: 2 1 400px;">
+        <p>
+          Soy un estratega de marketing digital enfocado en resultados y con pasión por las ideas que transforman. Combino creatividad, tecnología y análisis de datos para diseñar experiencias digitales que generan impacto y conversión.
+        </p>
+        <p style="margin-top: 1rem;">
+          Desde la creación de marcas memorables hasta la ejecución de campañas multicanal, mi objetivo es ayudar a negocios y emprendedores a posicionarse en el mundo digital de forma clara, visual y efectiva. Me especializo en storytelling visual, automatización, contenido audiovisual y crecimiento orgánico.
+        </p>
+        <p style="margin-top: 1rem;">
+          Si buscas conectar con tu audiencia, destacar frente a la competencia y convertir visitas en clientes, hablemos.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ----------  PROJECTS (DESIGN GALLERY)  ---------- -->
+  <section id="projects" class="section">
+    <h2>Piezas de Diseño</h2>
+    <div class="grid" id="design-gallery"></div>
+  </section>
+
+  <!-- ----------  YOUTUBE CHANNELS  ---------- -->
+  <section id="youtube" class="section">
+    <h2>Mis Canales de YouTube</h2>
+    <div class="grid" id="youtube-channels"></div>
+  </section>
+
+  <!-- ----------  SKILLS  ---------- -->
+  <section id="skills" class="section">
+    <h2>Habilidades e Idiomas</h2>
+    <div class="grid">
+      <!--  LANGUAGES  -->
+      <div class="card">
+        <h3>Idiomas</h3>
+        <p>Español</p>
+        <div class="language-bar"><span style="width: 100%"></span></div>
+
+        <p style="margin-top: 1rem">Inglés</p>
+        <div class="language-bar"><span style="width: 80%"></span></div>
+
+        <p style="margin-top: 1rem">Marroquí</p>
+        <div class="language-bar"><span style="width: 70%"></span></div>
+
+        <p style="margin-top: 1rem">Portugués</p>
+        <div class="language-bar"><span style="width: 60%"></span></div>
+
+
+        
+      </div>
+
+      <!--  TOOLS  -->
+      <div class="card">
+        <h3>Herramientas</h3>
+
+        <h4 style="margin-top: 1rem; color: var(--accent); font-size: 1rem;">🎨 Diseño Gráfico y Creativo</h4>
+        <div class="skills-icons" style="display: flex; flex-wrap: wrap; gap: 1rem;">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/photoshop/photoshop-plain.svg" alt="Photoshop">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/illustrator/illustrator-plain.svg" alt="Illustrator">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/premierepro/premierepro-original.svg" alt="Premiere Pro">
+          <img src="https://img.icons8.com/color/48/adobe-after-effects.png" alt="After Effects">
+          <img src="https://img.icons8.com/color/48/canva.png" alt="Canva">
+        </div>
+
+        <h4 style="margin-top: 1.5rem; color: var(--accent); font-size: 1rem;">📈 Automatización y Marketing</h4>
+        <div class="skills-icons" style="display: flex; flex-wrap: wrap; gap: 1rem;">
+          <img src="assets/mailchimp.svg" alt="Mailchimp">
+          <img src="assets/hubspot.svg" alt="HubSpot">
+          <img src="https://img.icons8.com/color/48/google-ads.png" alt="Google Ads">
+          <img src="assets/zapier.svg" alt="Zapier" style="height:36px;">
+        </div>
+
+        <h4 style="margin-top: 1.5rem; color: var(--accent); font-size: 1rem;">🧩 Gestión de Contenido y Web</h4>
+        <div class="skills-icons" style="display: flex; flex-wrap: wrap; gap: 1rem;">
+          <img src="https://img.icons8.com/ios-filled/50/ffffff/notion.png" alt="Notion">
+          <img src="https://img.icons8.com/color/48/wordpress.png" alt="WordPress">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML">
+          <img src="https://img.icons8.com/color/48/webflow.png" alt="Webflow">
+        </div>
+
+        <h4 style="margin-top: 1.5rem; color: var(--accent); font-size: 1rem;">🤖 Inteligencia Artificial</h4>
+        <div class="skills-icons" style="display: flex; flex-wrap: wrap; gap: 1rem;">
+          <img src="https://img.icons8.com/color/48/chatgpt.png" alt="ChatGPT">
+          <img src="https://img.icons8.com/color/48/adobe-creative-cloud.png" alt="Adobe Firefly">
+          <img src="https://img.icons8.com/color/48/midjourney.png" alt="Midjourney">
+          <img src="assets/synthesia.svg" alt="Synthesia" style="height:36px; filter: invert(1);">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ----------  SERVICES  ---------- -->
+  <section id="services" class="section">
+    <h2>Servicios que Ofrezco</h2>
+    <div class="services-container">
+      <div class="service-card"><div class="service-icon">🎨</div><div class="service-title">Diseño Gráfico</div><div class="service-desc">Creación visual coherente y memorable que potencia tu marca.</div></div>
+      <div class="service-card"><div class="service-icon">📱</div><div class="service-title">Social Media</div><div class="service-desc">Gestión profesional de redes con estrategia y contenido relevante.</div></div>
+      <div class="service-card"><div class="service-icon">💰</div><div class="service-title">Campañas Pagadas</div><div class="service-desc">Publicidad online con enfoque en resultados medibles y retorno.</div></div>
+      <div class="service-card"><div class="service-icon">🧠</div><div class="service-title">Estrategia de Contenido</div><div class="service-desc">Planificación estratégica para atraer, retener y convertir audiencias.</div></div>
+      <div class="service-card"><div class="service-icon">📧</div><div class="service-title">Email Marketing</div><div class="service-desc">Automatización y fidelización a través de correos efectivos.</div></div>
+      <div class="service-card"><div class="service-icon">✍️</div><div class="service-title">Redacción de Blogs</div><div class="service-desc">Contenido SEO optimizado que comunica con claridad y valor.</div></div>
+      <div class="service-card"><div class="service-icon">🕵️</div><div class="service-title">Auditoría Digital</div><div class="service-desc">Análisis profundo de tu presencia online y mejoras estratégicas.</div></div>
+      <div class="service-card"><div class="service-icon">📘</div><div class="service-title">eBooks & Newsletters</div><div class="service-desc">Contenido profesional para captar y nutrir audiencias clave.</div></div>
+      <div class="service-card"><div class="service-icon">🎯</div><div class="service-title">Kits de Marca</div><div class="service-desc">Identidad visual profesional: logo, tipografía, colores y más.</div></div>
+    </div>
+  </section>
+
+  <!-- ========  CONTACT SECTION (REVISADO)  ======== -->
+  <section id="contact" class="contact-section">
+    <h2>Contacto</h2>
+    <div class="contact-container">
+      <form id="contact-form" class="contact-form"
+            method="POST"
+            action="mailto:4219obsns@gmail.com"
+            enctype="text/plain">
+        <div class="form-group">
+          <input type="text" name="name" id="name" required placeholder=" " />
+          <label for="name">Tu Nombre</label>
+        </div>
+        <div class="form-group">
+          <input type="email" name="email" id="email" required placeholder=" " />
+          <label for="email">Tu Email</label>
+        </div>
+        <div class="form-group">
+          <textarea name="message" id="message" rows="5" required placeholder=" "></textarea>
+          <label for="message">Tu Mensaje</label>
+        </div>
+        <button type="submit" class="btn-submit">Enviar Mensaje</button>
+      </form>
+      <div class="contact-info">
+        <div class="info-item">
+          <span class="icon">📧</span>
+          <p>4219obsns@gmail.com</p>
+        </div>
+        <div class="info-item">
+          <span class="icon">📍</span>
+          <p>Madrid, España</p>
+        </div>
+        <div class="info-item">
+          <span class="icon">📞</span>
+          <p>+34 671 37 16 38</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Mi Portfolio de Marketing. Todos los derechos reservados.</p>
+  </footer>
+
+  <!-- ----------  SCRIPTS  ---------- -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      /* ----------  DESIGN GALLERY  ---------- */
+      const designGallery = document.getElementById('design-gallery');
+      const designs = [
+        'design1.jpg',
+        'design2.jpg',
+        'design3.jpg',
+        'design4.jpg',
+        'design5.jpg',
+        'design6.jpg',
+        'design7.jpg',
+        'design8.jpg'
+      ];
+
+      designs.forEach(src => {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'card design-card';
+        const img = document.createElement('img');
+        img.loading = 'lazy';
+        img.src = src;
+        img.alt = 'Pieza de diseño';
+        wrapper.appendChild(img);
+        designGallery.appendChild(wrapper);
+      });
+
+      /* ----------  YOUTUBE CHANNELS (vídeos completos)  ---------- */
+      const youtubeChannelsContainer = document.getElementById('youtube-channels');
+      const channels = [
+        { name: 'Quickz',           videoId: 'xXTy9UmpIbw' },
+        { name: 'UrbanSoundsHub',   videoId: 'zmqzBt1uLsk' },
+        { name: 'Lofi Natsukashii', videoId: '9ySv-UYGdxA' },
+        { name: 'BookBites',        videoId: 'QFC7F7f4YqI' },
+        { name: 'Nature Sleeps Sounds', videoId: 'WMCZ3dvdrcs' },
+        { name: 'NEXØ House DJ',    videoId: '28K6OoWywBw' },
+      ];
+
+      channels.forEach(ch => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <h3 style="margin-bottom: 0.5rem; color: var(--accent);">${ch.name}</h3>
+          <iframe
+            width="100%"
+            height="200"
+            src="https://www.youtube.com/embed/${ch.videoId}"
+            title="${ch.name} - Vídeo destacado"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+          </iframe>
+        `;
+        youtubeChannelsContainer.appendChild(card);
+      });
+
+      /* ----------  CONTACT FORM  ---------- */
+      // Eliminado el listener que prevenía el envío para dejar que el formulario abra el cliente de correo
+    });
+  </script>
+</body>
+</html>
